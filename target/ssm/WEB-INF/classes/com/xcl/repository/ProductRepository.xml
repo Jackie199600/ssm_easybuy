@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xcl.repository.ProductRepository">
+    <select id="findAllByLevelAndId" resultType="Product">
+        select * from easybuy_product where
+        <if test="categoryLevelOneId != null">
+            categoryleveloneid = #{id}
+        </if>
+        <if test="categoryLevelTwoId != null">
+            categoryleveltwoid = #{id}
+        </if>
+        <if test="categoryLevelThreeId != null">
+            categorylevelthreeid = #{id}
+        </if>
+    </select>
+    <select id="findById" resultType="Product" parameterType="java.lang.Integer">
+        select * from easybuy_product where id=#{id};
+    </select>
+
+    <select id="findAllByKeyWord" resultType="Product" parameterType="java.lang.String">
+        select * from easybuy_product where name like "%"#{keyWord}"%";
+    </select>
+</mapper>

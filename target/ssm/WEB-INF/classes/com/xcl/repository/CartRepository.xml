@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xcl.repository.CartRepository">
+    <insert id="add" parameterType="Cart">
+         insert into easybuy_cart(productid,quantity,cost,userid) values(#{productid},#{quantity},#{cost},#{userid})
+    </insert>
+
+    <resultMap id="cartMap" type="com.xcl.entity.Cart">
+        <id property="id" column="id"/>
+        <result property="quantity" column="quantity"/>
+        <result property="cost" column="cost"/>
+        <result property="userid" column="userid"/>
+        <association property="product" column="productid"
+                     select="com.xcl.repository.ProductRepository.findById"
+                     javaType="com.xcl.entity.Product"/>
+    </resultMap>
+    <select parameterType="java.lang.Integer" id="findAllByUserId"
+            resultMap="cartMap">select * from easybuy_cart where userid = #{id}
+    </select>
+    <update id="updateCart">
+        update easybuy_cart set quantity = #{param2},cost = #{param3} where id = #{param1}
+    </update>
+    <delete parameterType="java.lang.Integer" id="deleteById">
+    delete from easybuy_cart where id = #{id}
+    </delete>
+
+    <delete id="clearByUserId" parameterType="java.lang.Integer">
+        delete from easybuy_cart where userid=#{id}
+    </delete>
+    
+    <select id="getTotaleCostByUserId" parameterType="java.lang.Integer" resultType="java.lang.Double">
+        select sum(cost) from easybuy_cart where userid=#{id};
+    </select>
+</mapper>

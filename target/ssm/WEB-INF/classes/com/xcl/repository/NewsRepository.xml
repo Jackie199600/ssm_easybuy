@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xcl.repository.NewsRepository">
+    <select id="findForMain" resultType="News">
+        select * from  easybuy_news limit 0,5
+    </select>
+    <select resultType="News" id="findLimit">
+        select * from easybuy_news limit #{arg0},#{arg1}
+    </select>
+    <select resultType="java.lang.Integer" id="count">
+        select count(*) from easybuy_news
+    </select>
+</mapper>

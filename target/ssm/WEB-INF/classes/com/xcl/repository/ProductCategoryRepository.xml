@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xcl.repository.ProductCategoryRepository">
+    <select id="findAllByLevel" resultType="ProductCategory" parameterType="java.lang.Integer">
+     select * from easybuy_product_category where type = #{type}
+    </select>
+
+    <select id="findAllByLevelAndParentId" resultType="ProductCategory">
+    select * from easybuy_product_category where type = #{param1} and parentid = #{param2}
+    </select>
+
+</mapper>

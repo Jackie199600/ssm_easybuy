@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xcl.repository.OrderRepository">
+
+    <insert parameterType="Order" keyProperty="id" useGeneratedKeys="true" id="add">
+        insert into easybuy_order(userid,loginname,useraddress,createtime,cost,serialnumber) values(#{userid},#{loginname},#{useraddress},#{createtime},#{cost},#{serialnumber})
+    </insert>
+
+    <insert parameterType="Order" id="addDetail">
+        insert into easybuy_order_detail(orderid,productid,quantity,cost) values(#{id},#{cart.product.id},#{cart.quantity},#{cart.cost})
+    </insert>
+
+    <select id="findById" parameterType="java.lang.Integer" resultType="Order">
+        select  * from easybuy_order where id=#{id}
+    </select>
+
+
+    <select parameterType="java.lang.Integer" id="findAllByUserId" resultType="com.xcl.entity.Order">
+        select * from easybuy_order where userid = #{id}
+    </select>
+    <resultMap id="orderDetailMap" type="com.xcl.entity.OrderDetail">
+        <id column="id" property="id"/>
+        <result column="quantity" property="quantity"/>
+        <result column="cost" property="cost"/>
+        <association column="productid" property="product" select="com.xcl.repository.ProductRepository.findById"
+                     javaType="com.xcl.entity.Product"/>
+    </resultMap>
+
+    <select parameterType="java.lang.Integer" id="findAllDetailByOrderId" resultMap="orderDetailMap">
+        select * from easybuy_order_detail where orderid = #{id}
+    </select>
+
+</mapper>

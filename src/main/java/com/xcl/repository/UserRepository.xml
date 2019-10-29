@@ -1,0 +1,20 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="com.xcl.repository.UserRepository">
+    <select id="login" resultType="User">
+        select * from easybuy_user where loginname=#{param1} and password=#{param2};
+    </select>
+    <insert id="register" parameterType="User">
+        insert into easybuy_user(loginname,username,password,sex,identitycode,email,mobile) values(#{loginname},#{username},#{password},#{sex},#{indetitycode},#{email},#{mobile})
+    </insert>
+
+    <select id="findAllAddressByUserId" parameterType="java.lang.Integer" resultType="Address">
+        select * from easybuy_user_address where userid=#{id}
+    </select>
+
+    <insert id="save">
+        insert into easybuy_user_address(userid,address,createtime,isdefault,remark) values(#{param1},#{param2},#{param3},0,#{param4})
+    </insert>
+</mapper>
